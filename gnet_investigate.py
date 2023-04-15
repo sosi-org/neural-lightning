@@ -283,17 +283,28 @@ In summary, the output tensor contains 1024 feature maps, each of size 7x7, for 
 The 1024 feature maps in the inception5b module's output are a result of concatenating the outputs of each of its branches. Here's the breakdown of the 1024 feature maps for each branch in the inception5b module:
 
 1x1 Convolution: 384 feature maps
+
 3x3 Branch:
 1x1 Convolution (input): 192 feature maps
 3x3 Convolution (output): 384 feature maps
+
 5x5 Branch:
 1x1 Convolution (input): 48 feature maps
 5x5 Convolution (output): 128 feature maps
+
 Max-Pooling Branch:
 3x3 Max-Pooling (input)
 1x1 Convolution (output): 128 feature maps
 When you concatenate the outputs of each branch, you get a total of 384 + 384 + 128 + 128 = 1024 feature maps.
 
 Note that the number of feature maps produced by each branch is a design choice, and these values were determined through experimentation by the authors of the GoogLeNet architecture. The goal is to balance the computational complexity and the model's capability to capture various features at different scales.
+
+
+1x1 Convolution: 384 feature maps
+3x3 Branch: 384 feature maps
+5x5 Branch: 128 feature maps
+Max-Pooling Branch: 128 feature maps
+
+[] See: Going deeper with convolutions: https://arxiv.org/pdf/1409.4842v1.pdf
 
 """
