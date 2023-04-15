@@ -153,7 +153,19 @@ def visualise_me(nparray_3d):
     from pcolor import PColor
 
     # PColor.plot_show_image(G_paintings2d, file_id, sleep_sec, more_info)
-    PColor.plot_show_image(nparray_3d, 'file_id', 1, ('more_info', 'info2'))
+    # PColor.plot_show_image(nparray_3d, 'file_id', 1, ('more_info', 'info2'))
+    import matplotlib.pyplot as plt
+    import numpy as np
+    plt.clf()
+    import matplotlib
+    matplotlib.rc('axes', edgecolor='white')
+    matplotlib.rc('axes', facecolor='black')
+    scaled_back_to_255 = nparray_3d * 127.0 + 128
+    scaled_back_to_255[scaled_back_to_255 > 255] = 255
+    scaled_back_to_255[scaled_back_to_255 <0 ] = 0
+    plt.imshow(scaled_back_to_255.astype(np.uint8))
+    # plt.draw()
+    plt.show()
 
 def intercept(googlenet_model, image):
     # Define a hook to store the intermediate layer outputs
@@ -182,16 +194,21 @@ def intercept(googlenet_model, image):
         # output.cpu().numpy()  --> Can't call numpy() on Tensor that requires grad. Use tensor.detach().numpy() instead.
         npa = output.cpu().detach().numpy()
         print('npa.shape', npa.shape) # (1, 1024, 7, 7)
+
         npa2 = npa[0,:,:,:3]
         npa3 = npa2.copy()
-        visualise_me(npa3)
+        # visualise_me(npa3)
+
+        n1000 = npa[0,:,0,0]
+        n1000 = n1000.reshape((32,32))[:,:,None]
+        visualise_me(n1000)
 
 import glob
 for image_path in glob.glob('./image-input/**/*'):
     class_id, class_name = process_image(image_path, intercept)
     print(class_id, class_name, ' <-- ', image_path)
     # exit()
-    break
+    # break
 
 def show_module_info():
     """
