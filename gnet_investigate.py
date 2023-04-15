@@ -145,7 +145,7 @@ def process_image(image_path, intercept=None):
 
 
 
-def visualise_me(nparray_3d):
+def visualise_me(nparray_3d_arr):
     """
     nparray_3d: [W,H,3]  , where 3 is for R,G,B
     """
@@ -158,20 +158,24 @@ def visualise_me(nparray_3d):
     import matplotlib.pyplot as plt
     import numpy as np
     plt.clf()
-    import matplotlib
-    matplotlib.rc('axes', edgecolor='white')
-    matplotlib.rc('axes', facecolor='black')
+    for i in range(len(nparray_3d_arr)):
+        print('i',i)
+        plt.subplot(7,7, i+1)
+        import matplotlib
+        matplotlib.rc('axes', edgecolor='white')
+        matplotlib.rc('axes', facecolor='black')
 
-    scaled_back_to_255 = nparray_3d * 127.0 + 128
-    #scaled_back_to_255 = nparray_3d * 127.0 + 128
-    #scaled_back_to_255[scaled_back_to_255 > 255] = 255
-    #scaled_back_to_255[scaled_back_to_255 <0 ] = 0
-    #plt.imshow(scaled_back_to_255.astype(np.uint8))
+        nparray_3d = nparray_3d_arr[i]
+        scaled_back_to_255 = nparray_3d * 127.0 + 128
+        #scaled_back_to_255 = nparray_3d * 127.0 + 128
+        #scaled_back_to_255[scaled_back_to_255 > 255] = 255
+        #scaled_back_to_255[scaled_back_to_255 <0 ] = 0
+        #plt.imshow(scaled_back_to_255.astype(np.uint8))
 
-    # unscaled: in range: (0,5)
+        # unscaled: in range: (0,5)
 
-    plt.imshow(nparray_3d)
-    plt.colorbar()
+        plt.imshow(nparray_3d)
+        plt.colorbar()
     # plt.draw()
     plt.show()
 
@@ -183,13 +187,17 @@ def visu_all_4d_tensor(output):
     npa = output.cpu().detach().numpy()
     print('npa.shape', npa.shape) # (1, 1024, 7, 7)
 
-    npa2 = npa[0,:,:,:3]
-    npa3 = npa2.copy()
-    # visualise_me(npa3)
+    #npa2 = npa[0,:,:,:3]
+    #npa3 = npa2.copy()
+    ## visualise_me(npa3)
 
-    n1000 = npa[0,:,0,0]
-    n1000 = n1000.reshape((32,32))[:,:,None]
-    visualise_me(n1000)
+    img_array = []
+    for i in range(npa.shape[2]):
+      for j in range(npa.shape[3]):
+        n1000 = npa[0,:,i,j]
+        n1000 = n1000.reshape((32,32))[:,:,None]
+        img_array.append(n1000)
+    visualise_me(img_array)
 
 def intercept(googlenet_model, image):
     # Define a hook to store the intermediate layer outputs
