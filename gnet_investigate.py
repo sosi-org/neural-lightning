@@ -68,3 +68,27 @@ print('ready')
 print('Load and preprocess the image')
 
 from PIL import Image
+import torchvision.transforms as transforms
+
+image_path = './istockphoto-487522266-612x612.jpeg'
+image = Image.open(image_path)
+print(image)
+exit()
+transform = transforms.Compose([
+    transforms.Resize(256),
+    transforms.CenterCrop(224),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+])
+image = transform(image)
+image = image.unsqueeze(0)  # Add batch dimension
+
+
+
+# Perform inference
+predictions = googlenet_model(image)
+
+# Get the predicted class
+predicted_class = torch.argmax(predictions, dim=1).item()
+
+print("Predicted class:", predicted_class)
