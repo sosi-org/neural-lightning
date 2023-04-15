@@ -1,5 +1,6 @@
 # a new paradigm!
 # Also I can put these in a separate pytohn script
+# standalone: just run it anywhere
 
 import subprocess as sp
 
@@ -79,8 +80,8 @@ def read_googlenet_class_labels():
   imagenet_labels = json.loads(t)
   return imagenet_labels
 
-labels = read_googlenet_class_labels()
-print('GoogleNet: Labels:', labels)
+googlenet_labels = read_googlenet_class_labels()
+print('GoogleNet: Labels:', googlenet_labels)
 
 
 print('hello torch')
@@ -122,5 +123,5 @@ predictions = googlenet_model(image)
 predicted_class = torch.argmax(predictions, dim=1).item()
 
 print("Predicted class:", predicted_class)
-print("Predicted class:", labels[predicted_class])
+print("Predicted class:", googlenet_labels[predicted_class])
 # Predicted class: bee
