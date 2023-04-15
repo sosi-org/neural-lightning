@@ -102,7 +102,7 @@ print('ready')
 print('Load and preprocess the image')
 
 
-def process_image(image_path):
+def process_image(image_path, intercept=None):
 
   from PIL import Image
   import torchvision.transforms as transforms
@@ -119,7 +119,8 @@ def process_image(image_path):
   image = transform(image)
   image = image.unsqueeze(0)  # Add batch dimension
 
-
+  if intercept is not None:
+     intercept(googlenet_model, image)
 
   # Perform inference
   predictions = googlenet_model(image)
@@ -134,7 +135,28 @@ def process_image(image_path):
   return predicted_class, googlenet_labels[predicted_class]
 
 
+def intercept(googlenet_model, image):
+    # Define a hook to store the intermediate layer outputs
+    intermediate_outputs = []
+
+    def hook(module, input, output):
+        intermediate_outputs.append(output)
+
+    # Register the hook for a specific layer (example: mixed_5b)
+    layer_to_trace = googlenet_model.inception5b
+    handle = layer_to_trace.register_forward_hook(hook)
+
+    # Perform inference
+    _ = googlenet_model(image)
+
+    # Remove the hook
+    handle.remove()
+
+    # Print the intermediate outputs
+    for idx, output in enumerate(intermediate_outputs):
+        print(f"Output {idx}: {output.shape}")
+
 import glob
 for image_path in glob.glob('./image-input/**/*'):
-    class_id, class_name = process_image(image_path)
+    class_id, class_name = process_image(image_path, intercept)
     print(class_id, class_name, ' <-- ', image_path)
