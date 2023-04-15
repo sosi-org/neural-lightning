@@ -53,6 +53,37 @@ ensure_or_create_vend( "p3-for-me")
 # installs if exists, but in a quick way
 install_all_in_venv()
 
+
+# devops works
+def install_download_googlenet_class_labels():
+  import json
+  import requests
+  # Download and load ImageNet class labels
+  imagenet_labels_url = "https://raw.githubusercontent.com/anishathalye/imagenet-simple-labels/master/imagenet-simple-labels.json"
+  response = requests.get(imagenet_labels_url)
+  t = response.text
+  with open('./downloaded_googlenet_labels.json', 'w') as f:
+    f.write(t)
+  imagenet_labels = json.loads(t)
+
+# import os
+from pathlib import Path
+if not Path('./downloaded_googlenet_labels.json').is_file():
+  install_download_googlenet_class_labels()
+
+# after install_download_googlenet_class_labels(), not in the same run.
+def read_googlenet_class_labels():
+  import json
+  with open('downloaded_googlenet_labels.json', 'r') as f:
+    t = f.read()
+  imagenet_labels = json.loads(t)
+  return imagenet_labels
+
+labels = read_googlenet_class_labels()
+print('GoogleNet: Labels:', labels)
+
+exit()
+
 print('hello torch')
 import torch
 import torchvision.models as models
