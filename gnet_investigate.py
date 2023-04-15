@@ -57,9 +57,11 @@ print('hello torch')
 import torch
 import torchvision.models as models
 
-exit()
+print('load googlenet')
 # Load the pre-trained GoogLeNet model
 googlenet_model = models.googlenet(pretrained=True)
+print('eval googlenet')
 
 googlenet_model.eval()
 
+print('done')
