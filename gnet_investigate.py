@@ -108,7 +108,7 @@ def process_image(image_path):
   import torchvision.transforms as transforms
 
   image = Image.open(image_path)
-  print(image)
+  # print(image)
 
   transform = transforms.Compose([
       transforms.Resize(256),
@@ -127,13 +127,14 @@ def process_image(image_path):
   # Get the predicted class
   predicted_class = torch.argmax(predictions, dim=1).item()
 
-  print("Predicted class:", predicted_class)
-  print("Predicted class:", googlenet_labels[predicted_class])
+  # print("Predicted class:", predicted_class)
+  # print("Predicted class:", googlenet_labels[predicted_class])
+
   # Predicted class: bee
-  return googlenet_labels[predicted_class]
+  return predicted_class, googlenet_labels[predicted_class]
 
 
 import glob
 for image_path in glob.glob('./image-input/**/*'):
-    print(image_path)
-    process_image(image_path)
+    class_id, class_name = process_image(image_path)
+    print(class_id, class_name, ' <-- ', image_path)
