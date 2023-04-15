@@ -144,6 +144,7 @@ def process_image(image_path, intercept=None):
   return predicted_class, googlenet_labels[predicted_class]
 
 
+
 def visualise_me(nparray_3d):
     """
     nparray_3d: [W,H,3]  , where 3 is for R,G,B
@@ -174,6 +175,22 @@ def visualise_me(nparray_3d):
     # plt.draw()
     plt.show()
 
+def visu_all_4d_tensor(output):
+    print(output)
+    # torch.Size([1, 1024, 7, 7])
+
+    # output.cpu().numpy()  --> Can't call numpy() on Tensor that requires grad. Use tensor.detach().numpy() instead.
+    npa = output.cpu().detach().numpy()
+    print('npa.shape', npa.shape) # (1, 1024, 7, 7)
+
+    npa2 = npa[0,:,:,:3]
+    npa3 = npa2.copy()
+    # visualise_me(npa3)
+
+    n1000 = npa[0,:,0,0]
+    n1000 = n1000.reshape((32,32))[:,:,None]
+    visualise_me(n1000)
+
 def intercept(googlenet_model, image):
     # Define a hook to store the intermediate layer outputs
     intermediate_outputs = []
@@ -195,20 +212,8 @@ def intercept(googlenet_model, image):
     # Print the intermediate outputs
     for idx, output in enumerate(intermediate_outputs):
         print(f"Output {idx}: {output.shape}")
-        print(output)
-        # torch.Size([1, 1024, 7, 7])
+        visu_all_4d_tensor(output)
 
-        # output.cpu().numpy()  --> Can't call numpy() on Tensor that requires grad. Use tensor.detach().numpy() instead.
-        npa = output.cpu().detach().numpy()
-        print('npa.shape', npa.shape) # (1, 1024, 7, 7)
-
-        npa2 = npa[0,:,:,:3]
-        npa3 = npa2.copy()
-        # visualise_me(npa3)
-
-        n1000 = npa[0,:,0,0]
-        n1000 = n1000.reshape((32,32))[:,:,None]
-        visualise_me(n1000)
 
 import glob
 for image_path in glob.glob('./image-input/**/*'):
