@@ -14,9 +14,18 @@ def ensure_or_create_vend(VNAME):
 
         exit()
       print('ok2')
+    except Exception as e:
+
+      import subprocess as sp
+      proc = sp.run(['python3', '-m', 'venv', '--copies', VNAME])
+      if proc.returncode != 0:
+          print('failed')
+          exit()
+      print('run this again after:')
+      print(f'source "./{VNAME}/bin/activate"')
+
       exit()
-
-
+def install_all_in_venv():
       #pip install torch --no-cache-dir
       #pip install torchvision  --no-cache-dir
       #pip install torchvision
@@ -31,19 +40,10 @@ def ensure_or_create_vend(VNAME):
       print('ok')
 
       exit()
-    except Exception as e:
-
-      import subprocess as sp
-      proc = sp.run(['python3', '-m', 'venv', '--copies', VNAME])
-      if proc.returncode != 0:
-          print('failed')
-          exit()
-      print('run this again after:')
-      print(f'source "./{VNAME}/bin/activate"')
-
-      exit()
-
+# Can exit
 ensure_or_create_vend( "p3-for-me")
+exit()
+install_all_in_venv()
 
 exit()
 import torch
