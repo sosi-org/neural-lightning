@@ -70,7 +70,7 @@ print('Load and preprocess the image')
 from PIL import Image
 import torchvision.transforms as transforms
 
-image_path = './istockphoto-487522266-612x612.jpeg'
+image_path = './image-input/istockphoto-487522266-612x612.jpeg'
 image = Image.open(image_path)
 print(image)
 exit()
