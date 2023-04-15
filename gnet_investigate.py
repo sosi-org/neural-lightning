@@ -1,4 +1,5 @@
 # a new paradigm!
+# Also I can put these in a separate pytohn script
 
 import subprocess as sp
 
@@ -33,26 +34,30 @@ def install_all_in_venv():
       #pip install torch --no-cache-dir
       #pip install torchvision  --no-cache-dir
       #pip install torchvision
+      # interject command (yield)
       proc = sp.run(['pip', 'install', 'torch'])
       if proc.returncode != 0:
           print('failed')
           exit()
-      print('ok-install 1')  # interject (yield)
+      print('ok-install 1')  # interject result (yield)
+      # interject command (yield)
       proc = sp.run(['pip', 'install', 'torchvision'])
       if proc.returncode != 0:
           print('failed')
           exit()
-      print('ok-install 2')  # interject (yield)
+      print('ok-install 2')  # interject result (yield)
 
 # Can exit
 ensure_or_create_vend( "p3-for-me")
 
+# installs if exists, but in a quick way
 install_all_in_venv()
 
-exit()
+print('hello torch')
 import torch
 import torchvision.models as models
 
+exit()
 # Load the pre-trained GoogLeNet model
 googlenet_model = models.googlenet(pretrained=True)
 
