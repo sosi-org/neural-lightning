@@ -269,4 +269,31 @@ show_module_info()
         ├── 3x3 Max-Pooling
         └── 1x1 Convolution
 
+torch.Size([1, 1024, 7, 7]):
+1 is batch size
+
+The second dimension (1024) represents the number of feature maps (channels) produced by the inception5b layer. Each feature map captures specific features or patterns in the input image. In GoogLeNet's Inception modules, the number of feature maps is determined by the concatenation of the outputs from different branches (1x1, 3x3, 5x5, and max-pooling branches).
+
+The third and fourth dimensions (7, 7) represent the spatial dimensions (height and width) of the feature maps. At this point in the GoogLeNet architecture, the spatial dimensions of the input image have been reduced significantly due to successive convolutional and pooling layers. The 7x7 feature maps contain spatial information about the detected features or patterns in the input image.
+
+In summary, the output tensor contains 1024 feature maps, each of size 7x7, for a single input image. Each feature map encodes specific information about the input image, which is then used by subsequent layers in the network for higher-level reasoning and classification.
+
+
+1024:
+The 1024 feature maps in the inception5b module's output are a result of concatenating the outputs of each of its branches. Here's the breakdown of the 1024 feature maps for each branch in the inception5b module:
+
+1x1 Convolution: 384 feature maps
+3x3 Branch:
+1x1 Convolution (input): 192 feature maps
+3x3 Convolution (output): 384 feature maps
+5x5 Branch:
+1x1 Convolution (input): 48 feature maps
+5x5 Convolution (output): 128 feature maps
+Max-Pooling Branch:
+3x3 Max-Pooling (input)
+1x1 Convolution (output): 128 feature maps
+When you concatenate the outputs of each branch, you get a total of 384 + 384 + 128 + 128 = 1024 feature maps.
+
+Note that the number of feature maps produced by each branch is a design choice, and these values were determined through experimentation by the authors of the GoogLeNet architecture. The goal is to balance the computational complexity and the model's capability to capture various features at different scales.
+
 """
