@@ -157,6 +157,7 @@ def intercept(googlenet_model, image):
     for idx, output in enumerate(intermediate_outputs):
         print(f"Output {idx}: {output.shape}")
         print(output)
+        # torch.Size([1, 1024, 7, 7])
 
 import glob
 for image_path in glob.glob('./image-input/**/*'):
@@ -204,4 +205,4 @@ show_module_info()
         ├── 3x3 Max-Pooling
         └── 1x1 Convolution
 
-    """
+"""
