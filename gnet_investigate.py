@@ -1,4 +1,7 @@
-# a new paradigm!
+# neural-lightning
+
+# devops: self-installer:
+# a new paradigm! Use the same language
 # Also I can put these in a separate pytohn script
 # standalone: just run it anywhere
 
@@ -127,5 +130,10 @@ def process_image(image_path):
   print("Predicted class:", predicted_class)
   print("Predicted class:", googlenet_labels[predicted_class])
   # Predicted class: bee
+  return googlenet_labels[predicted_class]
 
-process_image( './image-input/istockphoto-487522266-612x612.jpeg')
+
+import glob
+for image_path in glob.glob('./image-input/**/*'):
+    print(image_path)
+    process_image(image_path)
