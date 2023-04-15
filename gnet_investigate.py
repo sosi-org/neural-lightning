@@ -73,7 +73,7 @@ import torchvision.transforms as transforms
 image_path = './image-input/istockphoto-487522266-612x612.jpeg'
 image = Image.open(image_path)
 print(image)
-exit()
+
 transform = transforms.Compose([
     transforms.Resize(256),
     transforms.CenterCrop(224),
