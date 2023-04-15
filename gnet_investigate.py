@@ -146,6 +146,7 @@ def intercept(googlenet_model, image):
     layer_to_trace = googlenet_model.inception5b
     handle = layer_to_trace.register_forward_hook(hook)
 
+    # See note [1]
     # Perform inference
     _ = googlenet_model(image)
 
@@ -161,4 +162,46 @@ import glob
 for image_path in glob.glob('./image-input/**/*'):
     class_id, class_name = process_image(image_path, intercept)
     print(class_id, class_name, ' <-- ', image_path)
-    exit()
+    # exit()
+    break
+
+def show_module_info():
+    """
+    In the PyTorch implementation of GoogLeNet, you can examine the details of the inception5b module by simply printing it:
+    """
+
+    import torchvision.models as models
+    googlenet_model = models.googlenet(pretrained=True)
+    print(googlenet_model.inception5b)
+
+show_module_info()
+
+"""
+    Note [1]
+    In GoogLeNet, the inception5b module is an Inception module, which is a substructure designed to capture local features at different scales by applying multiple parallel convolutional filters with different kernel sizes. Inception modules help increase the network's capability to capture both high-level and low-level features, while keeping computational complexity manageable.
+
+    The inception5b module is the last Inception module in the GoogLeNet architecture. Its structure consists of the following branches:
+
+    Branch 1: 1x1 convolution
+    Branch 2: 1x1 convolution followed by a 3x3 convolution
+    Branch 3: 1x1 convolution followed by a 5x5 convolution
+    Branch 4: 3x3 max-pooling followed by a 1x1 convolution
+
+
+    Each branch operates in parallel, and their outputs are concatenated along the channel axis to form the final output of the Inception module.
+
+    Here's an outline of the inception5b module structure:
+
+    inception5b
+    ├── 1x1 Convolution
+    ├── 3x3 Branch
+    │   ├── 1x1 Convolution
+    │   └── 3x3 Convolution
+    ├── 5x5 Branch
+    │   ├── 1x1 Convolution
+    │   └── 5x5 Convolution
+    └── Max-Pooling Branch
+        ├── 3x3 Max-Pooling
+        └── 1x1 Convolution
+
+    """
