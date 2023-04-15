@@ -84,7 +84,7 @@ def read_googlenet_class_labels():
   return imagenet_labels
 
 googlenet_labels = read_googlenet_class_labels()
-print('GoogleNet: Labels:', googlenet_labels)
+# print('GoogleNet: All Labels:', googlenet_labels)
 
 
 print('hello torch')
@@ -155,8 +155,10 @@ def intercept(googlenet_model, image):
     # Print the intermediate outputs
     for idx, output in enumerate(intermediate_outputs):
         print(f"Output {idx}: {output.shape}")
+        print(output)
 
 import glob
 for image_path in glob.glob('./image-input/**/*'):
     class_id, class_name = process_image(image_path, intercept)
     print(class_id, class_name, ' <-- ', image_path)
+    exit()
