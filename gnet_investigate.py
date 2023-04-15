@@ -82,7 +82,6 @@ def read_googlenet_class_labels():
 labels = read_googlenet_class_labels()
 print('GoogleNet: Labels:', labels)
 
-exit()
 
 print('hello torch')
 import torch
@@ -123,3 +122,5 @@ predictions = googlenet_model(image)
 predicted_class = torch.argmax(predictions, dim=1).item()
 
 print("Predicted class:", predicted_class)
+print("Predicted class:", labels[predicted_class])
+# Predicted class: bee
