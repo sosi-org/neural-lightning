@@ -62,6 +62,7 @@ print('load googlenet')
 googlenet_model = models.googlenet(pretrained=True)
 print('eval googlenet')
 
+# Inference (as opposed to training) mode
 googlenet_model.eval()
 
 print('done')
