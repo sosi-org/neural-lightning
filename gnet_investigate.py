@@ -57,12 +57,14 @@ print('hello torch')
 import torch
 import torchvision.models as models
 
-print('load googlenet')
-# Load the pre-trained GoogLeNet model
+print('Load the pre-trained GoogLeNet model')
 googlenet_model = models.googlenet(pretrained=True)
-print('eval googlenet')
 
-# Inference (as opposed to training) mode
+print('Inference (as opposed to training) mode')
 googlenet_model.eval()
+print('ready')
 
-print('done')
+
+print('Load and preprocess the image')
+
+from PIL import Image
