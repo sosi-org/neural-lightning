@@ -160,10 +160,17 @@ def visualise_me(nparray_3d):
     import matplotlib
     matplotlib.rc('axes', edgecolor='white')
     matplotlib.rc('axes', facecolor='black')
+
     scaled_back_to_255 = nparray_3d * 127.0 + 128
-    scaled_back_to_255[scaled_back_to_255 > 255] = 255
-    scaled_back_to_255[scaled_back_to_255 <0 ] = 0
-    plt.imshow(scaled_back_to_255.astype(np.uint8))
+    #scaled_back_to_255 = nparray_3d * 127.0 + 128
+    #scaled_back_to_255[scaled_back_to_255 > 255] = 255
+    #scaled_back_to_255[scaled_back_to_255 <0 ] = 0
+    #plt.imshow(scaled_back_to_255.astype(np.uint8))
+
+    # unscaled: in range: (0,5)
+
+    plt.imshow(nparray_3d)
+    plt.colorbar()
     # plt.draw()
     plt.show()
 
