@@ -157,10 +157,14 @@ def visualise_me(nparray_3d_arr):
     # PColor.plot_show_image(nparray_3d, 'file_id', 1, ('more_info', 'info2'))
     import matplotlib.pyplot as plt
     import numpy as np
+    fig = plt.figure()
     plt.clf()
+    fig, axes = plt.subplots(7,7)
+    print(axes, '00000')
     for i in range(len(nparray_3d_arr)):
         print('i',i)
-        plt.subplot(7,7, i+1)
+        # plt.subplot(7,7, i+1)
+        fig.subplots_adjust(wspace=0.1, hspace=0.1)
         import matplotlib
         matplotlib.rc('axes', edgecolor='white')
         matplotlib.rc('axes', facecolor='black')
@@ -173,9 +177,11 @@ def visualise_me(nparray_3d_arr):
         #plt.imshow(scaled_back_to_255.astype(np.uint8))
 
         # unscaled: in range: (0,5)
-
-        plt.imshow(nparray_3d)
-        plt.colorbar()
+        ic = i % 7
+        jc = int(i / 7)
+        axes[ic][jc].imshow(nparray_3d)
+        #  axes[i]
+        # plt.colorbar()
     # plt.draw()
     plt.show()
 
@@ -228,7 +234,7 @@ for image_path in glob.glob('./image-input/**/*'):
     class_id, class_name = process_image(image_path, intercept)
     print(class_id, class_name, ' <-- ', image_path)
     # exit()
-    # break
+    break
 
 def show_module_info():
     """
